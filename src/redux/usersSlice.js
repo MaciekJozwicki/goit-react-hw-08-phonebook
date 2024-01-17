@@ -1,27 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchContacts, registerUser, loginUser } from './operations';
+import { logoutUser, registerUser, loginUser } from './operations';
 
 export const usersSlice = createSlice({
-  name: 'contacts',
+  name: 'users',
   initialState: {
     token: '',
-    filter: '',
+    user: '',
     error: null,
     isLoading: false,
   },
   extraReducers: builder => {
     builder
-      .addCase(fetchContacts.pending, (state, { payload }) => {
-        state.isLoading = true;
-      })
-      .addCase(fetchContacts.fulfilled, (state, { payload }) => {
-        state.isLoading = true;
-        state.contacts = payload;
-      })
-      .addCase(fetchContacts.rejected, (state, { payload }) => {
-        state.isLoading = true;
-      })
-
       .addCase(registerUser.pending, (state, { payload }) => {
         state.isLoading = true;
       })
@@ -39,12 +28,22 @@ export const usersSlice = createSlice({
       .addCase(loginUser.fulfilled, (state, { payload }) => {
         state.isLoading = true;
         state.token = payload.token;
-        console.log(state.token);
+        state.user = payload.email;
       })
       .addCase(loginUser.rejected, (state, { payload }) => {
         state.isLoading = true;
+      })
+      .addCase(logoutUser.pending, (state, { payload }) => {
+        state.isLoading = true;
+      })
+      .addCase(logoutUser.fulfilled, (state, { payload }) => {
+        state.isLoading = true;
+        state.token = '';
+        state.email = '';
+      })
+      .addCase(logoutUser.rejected, (state, { payload }) => {
+        state.isLoading = true;
       });
-    // 3 takie staty jak wyzej osobno dla login i register
   },
   reducers: {},
 });

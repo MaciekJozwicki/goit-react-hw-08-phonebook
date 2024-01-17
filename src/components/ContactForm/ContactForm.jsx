@@ -1,9 +1,10 @@
-import { nanoid } from 'nanoid';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from '../../redux/operations';
+import { selectToken } from '../../redux/selectors';
 
 const ContactForm = ({ newContact }) => {
+  const token = useSelector(selectToken);
   const dispatch = useDispatch();
   const [userData, setuserData] = useState({
     name: '',
@@ -20,7 +21,7 @@ const ContactForm = ({ newContact }) => {
   const handleSubmit = e => {
     dispatch(
       addContact({
-        id: nanoid(),
+        token: token,
         name: userData.name,
         number: userData.number,
       })
