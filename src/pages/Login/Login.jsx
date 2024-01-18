@@ -9,8 +9,8 @@ const Login = () => {
   const token = useSelector(selectToken);
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState('bartek+1@wp.pl');
-  const [password, setPassword] = useState('123123123');
+  const [email, setEmail] = useState('ddd@test.pl');
+  const [password, setPassword] = useState('dddddddd');
 
   useEffect(() => {
     if (token) {

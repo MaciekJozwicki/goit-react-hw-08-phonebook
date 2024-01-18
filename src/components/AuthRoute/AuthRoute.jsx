@@ -7,10 +7,8 @@ import { useNavigate } from 'react-router-dom';
 const AuthRoute = ({ component: Component, ...rest }) => {
   const authState = useSelector(selectToken);
   const navigate = useNavigate();
-  console.log(123);
-  console.log(authState.length);
 
-  console.log(navigate);
+  console.log(authState);
   useEffect(() => {
     if (!authState) {
       console.log(1333);

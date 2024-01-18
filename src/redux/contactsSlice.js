@@ -9,6 +9,7 @@ import {
 export const contactsSlice = createSlice({
   name: 'contacts',
   initialState: {
+    token: '',
     contacts: [],
     filter: '',
     error: null,

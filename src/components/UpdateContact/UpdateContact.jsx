@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, useLocation } from 'react-router';
 import { updateContact } from '../../redux/operations';
 import { selectToken } from '../../redux/selectors';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 const UpdateContact = () => {
   const { id } = useParams();
@@ -18,7 +19,9 @@ const UpdateContact = () => {
     number: '',
   });
 
-  
+  useEffect(() => {
+    setContact({ name, number });
+  }, [name, number]);
 
   const onInputChange = e => {
     setContact({ ...contact, [e.target.name]: e.target.value });
@@ -45,13 +48,14 @@ const UpdateContact = () => {
   return (
     <div>
       <div>
+        <Link to="/login">Back to contacts</Link>
         <h2>Edit Contact</h2>
         <form onSubmit={e => onSubmit(e)}>
           <div>
             <input
               type="text"
               name="name"
-              value={name}
+              value={contact.name}
               onChange={e => onInputChange(e)}
               placeholder="Enter Your Name"
             />
@@ -60,7 +64,7 @@ const UpdateContact = () => {
             <input
               type="text"
               name="number"
-              value={number}
+              value={contact.number}
               onChange={e => onInputChange(e)}
               placeholder="Number"
             />

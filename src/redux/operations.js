@@ -95,6 +95,23 @@ export const removeContact = createAsyncThunk(
   }
 );
 
+// export const removeContact = createAsyncThunk(
+//   'contacts/removeContact',
+//   async (id, { getState, rejectWithValue }) => {
+//     const token = getState(authState); // Replace with the actual path to the token in your state
+//     try {
+//       const response = await axios.delete(`${url}/contacts/${id}`, {
+//         headers: {
+//           Authorization: `Bearer ${token}`,
+//         },
+//       });
+//       return response.data;
+//     } catch (e) {
+//       return rejectWithValue(e.message);
+//     }
+//   }
+// );
+
 export const loginUser = createAsyncThunk(
   'users/loginUser',
   async (data, thunkAPI) => {
