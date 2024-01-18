@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { removeContact } from '../../redux/operations';
 import { selectVisibleContacts, selectToken } from '../../redux/selectors';
 import { Link } from 'react-router-dom';
-import { Button, ListItem, Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import ListItemText from '@mui/material/ListItemText';
 import { orange } from '@mui/material/colors';
 
