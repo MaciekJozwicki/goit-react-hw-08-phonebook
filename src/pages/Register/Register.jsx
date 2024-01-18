@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { fetchContacts,  registerUser } from '../../redux/operations';
+import { fetchContacts, registerUser } from '../../redux/operations';
 import { Link } from 'react-router-dom';
+import { Box, Button, TextField, Typography } from '@mui/material';
 
 const Register = () => {
   const dispatch = useDispatch();
@@ -28,30 +29,53 @@ const Register = () => {
 
   return (
     <>
-      <Link to="/">Home</Link>
+      <Box sx={{ m: 3 }}>
+        <Typography
+          variant="h6"
+          component="div"
+          sx={{
+            flexGrow: 1,
+            color: 'black',
+
+            textDecoration: 'none',
+            fontWeight: 'bold',
+            fontSize: '20px',
+            fontFamily: 'Roboto',
+          }}
+        >
+          <Link to="/">Home</Link>
+        </Typography>
+      </Box>
+
       <form onSubmit={e => handleSubmit(e)}>
-        <input
-          type="text"
-          name="name"
-          placeholder="name"
+        <TextField
+          id="outlined-basic"
+          label="Name"
+          variant="outlined"
           value={name}
           onChange={e => setName(e.target.value)}
         />
-        <input
-          type="email"
+        <TextField
+          id="outlined-basic"
+          label="Email"
+          variant="outlined"
           name="email"
-          placeholder="email"
           value={email}
           onChange={e => setEmail(e.target.value)}
         />
-        <input
-          type="password"
+        <TextField
+          id="outlined-basic"
+          label="Password"
+          variant="outlined"
           name="password"
+          type="password"
           value={password}
           placeholder="password"
           onChange={e => setPassword(e.target.value)}
         />
-        <button type="submit">Login</button>
+        <Button variant="contained" type="submit" sx={{ m: 2 }}>
+          Register
+        </Button>
       </form>
     </>
   );

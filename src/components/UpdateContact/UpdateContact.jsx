@@ -4,6 +4,7 @@ import { updateContact } from '../../redux/operations';
 import { selectToken } from '../../redux/selectors';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { Box, Button, TextField, Typography } from '@mui/material';
 
 const UpdateContact = () => {
   const { id } = useParams();
@@ -11,8 +12,6 @@ const UpdateContact = () => {
   const token = useSelector(selectToken);
   const { name, number } = location.state;
   const dispatch = useDispatch();
-
-  
 
   const [contact, setContact] = useState({
     name: '',
@@ -38,42 +37,72 @@ const UpdateContact = () => {
         number: contact.number,
       })
     );
-    // usedispatch updateContact i mu przekazujesz id, name, number i token jeszcze
-    // w inputach mozesz jako placeholder wyswietlac obecne dane kontaktu
-    // ten komponent moglbys zmienic na Pages zamiast zeby byl w komponentach
-    // po wpisaniu danych w input one sie nie zmieniaja, zrob sobie console log tego state contact to zobaczysz ze jest lipa i tez po wpisaniu w pola input nie zmienia sie ich wartosc na froncie
-    // reszta tasków jest w app.jsx
   };
 
   return (
-    <div>
-      <div>
-        <Link to="/login">Back to contacts</Link>
-        <h2>Edit Contact</h2>
-        <form onSubmit={e => onSubmit(e)}>
-          <div>
-            <input
-              type="text"
-              name="name"
-              value={contact.name}
-              onChange={e => onInputChange(e)}
-              placeholder="Enter Your Name"
-            />
-          </div>
-          <div className="form-group">
-            <input
-              type="text"
-              name="number"
-              value={contact.number}
-              onChange={e => onInputChange(e)}
-              placeholder="Number"
-            />
-          </div>
+    <>
+      <Box sx={{ m: 18, p: 3, borderStyle: 'dotted', borderRadius: '20px' }}>
+        <Typography
+          sx={{
+            display: 'flex',
+            backgroundColor: 'orange',
+            width: 125,
+            height: 35,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Link
+            style={{
+              textDecoration: 'none',
+              color: 'black',
+              hover: { color: 'red' },
+            }}
+            to="/login"
+          >
+            Back to contacts
+          </Link>
+        </Typography>
 
-          <button>Update Contact</button>
+        <h2>Edit Contact</h2>
+
+        <form
+          style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}
+          onSubmit={e => onSubmit(e)}
+        >
+          <TextField
+            type="text"
+            name="name"
+            value={contact.name}
+            onChange={e => onInputChange(e)}
+            placeholder="Enter Your Name"
+            sx={{ width: '300px' }}
+          />
+
+          <TextField
+            type="text"
+            name="number"
+            value={contact.number}
+            onChange={e => onInputChange(e)}
+            placeholder="Number"
+            sx={{ width: '300px' }}
+          />
+          <Button
+            sx={{
+              display: 'flex',
+              backgroundColor: 'orange',
+              width: 125,
+              height: 55,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+            type="submit"
+          >
+            {`Update contact`}
+          </Button>
         </form>
-      </div>
-    </div>
+      </Box>
+    </>
   );
 };
 export default UpdateContact;

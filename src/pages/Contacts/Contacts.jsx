@@ -5,6 +5,7 @@ import { selectToken } from '../../redux/selectors';
 import ContactList from 'components/ContactList/ContactList';
 import ContactForm from 'components/ContactForm/ContactForm';
 import Filter from 'components/Filter/Filter';
+import { Box, Button } from '@mui/material';
 
 const Contacts = () => {
   const token = useSelector(selectToken);
@@ -17,17 +18,29 @@ const Contacts = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    
+
     dispatch(logoutUser(token));
   };
 
   return (
     <>
       <ul>
-        <button onClick={handleSubmit}>LogOut</button>
-        <ContactForm />
-        <Filter/>
-        <ContactList />
+        <Box sx={{ m: 18, borderStyle: 'dotted', borderRadius: '20px' }}>
+          <Box sx={{ m: 3 }}>
+            <Button variant="contained" color="primary" onClick={handleSubmit}>
+              Log out
+            </Button>
+          </Box>
+          <Box sx={{ m: 3 }}>
+            <ContactForm />
+          </Box>
+          <Box sx={{ m: 3 }}>
+            <Filter />
+          </Box>
+          <Box sx={{ m: 3 }}>
+            <ContactList />
+          </Box>
+        </Box>
       </ul>
     </>
   );

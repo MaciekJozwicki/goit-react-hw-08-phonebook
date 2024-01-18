@@ -3,14 +3,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../../redux/operations';
 import { Link, useNavigate } from 'react-router-dom';
 import { selectToken } from '../../redux/selectors';
+import { Box, Button, TextField, Typography } from '@mui/material';
 
 const Login = () => {
   const dispatch = useDispatch();
   const token = useSelector(selectToken);
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState('ddd@test.pl');
-  const [password, setPassword] = useState('dddddddd');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   useEffect(() => {
     if (token) {
@@ -31,23 +32,45 @@ const Login = () => {
 
   return (
     <>
-      <Link to="/">Home</Link>
+      <Box sx={{ m: 3 }}>
+        <Typography
+          variant="h6"
+          component="div"
+          sx={{
+            flexGrow: 1,
+            color: 'black',
+
+            textDecoration: 'none',
+            fontWeight: 'bold',
+            fontSize: '20px',
+            fontFamily: 'Roboto',
+          }}
+        >
+          <Link to="/">Home</Link>
+        </Typography>
+      </Box>
       <form onSubmit={e => handleSubmit(e)}>
-        <input
-          type="email"
+        <TextField
+          id="outlined-basic"
+          label="Email"
+          variant="outlined"
           name="email"
-          placeholder="email"
           value={email}
           onChange={e => setEmail(e.target.value)}
         />
-        <input
-          type="password"
+        <TextField
+          id="outlined-basic"
+          label="Password"
+          variant="outlined"
           name="password"
+          type="password"
           value={password}
           placeholder="password"
           onChange={e => setPassword(e.target.value)}
         />
-        <button type="submit">Login</button>
+        <Button variant="contained" type="submit" sx={{ m: 2 }}>
+          Login
+        </Button>
       </form>
     </>
   );
