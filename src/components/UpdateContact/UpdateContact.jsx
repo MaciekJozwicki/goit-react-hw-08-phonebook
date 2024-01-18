@@ -12,7 +12,7 @@ const UpdateContact = () => {
   const { name, number } = location.state;
   const dispatch = useDispatch();
 
-  console.log(name, number);
+  
 
   const [contact, setContact] = useState({
     name: '',

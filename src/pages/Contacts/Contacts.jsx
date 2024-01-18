@@ -16,7 +16,7 @@ const Contacts = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    console.log('token', token);
+    
     dispatch(logoutUser(token));
   };
 

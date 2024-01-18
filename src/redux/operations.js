@@ -17,7 +17,6 @@ const clearAuthToken = () => {
 export const fetchContacts = createAsyncThunk(
   'contacts/fetchAll',
   async (token, thunkAPI) => {
-    console.log('11111token', token);
     try {
       const response = await axios.get(`${url}/contacts`, {
         headers: {
@@ -88,6 +87,7 @@ export const removeContact = createAsyncThunk(
           Authorization: `Bearer ${data.token}`,
         },
       });
+      setAuthToken(response.data.token);
       return response.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
