@@ -12,7 +12,6 @@ export const selectVisibleContacts = createSelector(
     if (filteredContacts === '') {
       return contacts;
     } else {
-      console.log('contacts', contacts);
       return contacts.filter(
         contact =>
           contact.name.toLowerCase().includes(filteredContacts.filter) ?? []

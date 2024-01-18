@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { logoutUser, registerUser, loginUser } from './operations';
+import { logoutUser, registerUser, loginUser, refreshUser } from './operations';
 
 export const usersSlice = createSlice({
   name: 'users',
@@ -11,18 +11,18 @@ export const usersSlice = createSlice({
   },
   extraReducers: builder => {
     builder
-      .addCase(registerUser.pending, (state, { payload }) => {
+      .addCase(registerUser.pending, state => {
         state.isLoading = true;
       })
       .addCase(registerUser.fulfilled, (state, { payload }) => {
         state.isLoading = true;
         state.contacts = payload;
       })
-      .addCase(registerUser.rejected, (state, { payload }) => {
+      .addCase(registerUser.rejected, state => {
         state.isLoading = true;
       })
 
-      .addCase(loginUser.pending, (state, { payload }) => {
+      .addCase(loginUser.pending, state => {
         state.isLoading = true;
       })
       .addCase(loginUser.fulfilled, (state, { payload }) => {
@@ -30,18 +30,28 @@ export const usersSlice = createSlice({
         state.token = payload.token;
         state.user = payload.email;
       })
-      .addCase(loginUser.rejected, (state, { payload }) => {
+      .addCase(loginUser.rejected, state => {
         state.isLoading = true;
       })
-      .addCase(logoutUser.pending, (state, { payload }) => {
+      .addCase(logoutUser.pending, state => {
         state.isLoading = true;
       })
-      .addCase(logoutUser.fulfilled, (state, { payload }) => {
+      .addCase(logoutUser.fulfilled, state => {
         state.isLoading = true;
         state.token = '';
         state.email = '';
       })
-      .addCase(logoutUser.rejected, (state, { payload }) => {
+      .addCase(logoutUser.rejected, state => {
+        state.isLoading = true;
+      })
+      .addCase(refreshUser.pending, state => {
+        state.isLoading = true;
+      })
+      .addCase(refreshUser.fulfilled, state => {
+        state.isLoading = true;
+      })
+      .addCase(refreshUser.rejected, state => {
+        state.token = '';
         state.isLoading = true;
       });
   },

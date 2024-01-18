@@ -1,12 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { removeContact } from '../../redux/operations';
-import { selectVisibleContacts } from '../../redux/selectors';
+import { selectVisibleContacts, selectToken } from '../../redux/selectors';
 import { Link } from 'react-router-dom';
 
 const ContactList = () => {
   const dispatch = useDispatch();
   const contacts = useSelector(selectVisibleContacts);
-  // const token = useSelector(state => state.auth.token);
+  const token = useSelector(selectToken);
 
   return (
     <ul>
@@ -16,9 +16,7 @@ const ContactList = () => {
               Name: {contact.name} Number: {contact.number}
               <button
                 onClick={() =>
-                  dispatch(
-                    removeContact({ id: contact.id, token: contact.token })
-                  )
+                  dispatch(removeContact({ id: contact.id, token: token }))
                 }
               >
                 Delete

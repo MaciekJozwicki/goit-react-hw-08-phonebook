@@ -4,25 +4,18 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 const url = 'https://connections-api.herokuapp.com';
 
 const setAuthToken = token => {
-  axios.defaults.headers.common.Authorization = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWE2ZTI2Yzk5M2M1YjAwMTRkYTc2ZmIiLCJpYXQiOjE3MDU0MzgwNTh9.q6ReNeCYBlSKWCs76tScM92VScovh1sUdPxZUzNnufk`;
+  axios.defaults.headers.common.Authorization = `Bearer ${token}`;
 };
 
 const clearAuthToken = () => {
-  // to dla logout
   axios.defaults.headers.common.Authorization = '';
 };
-
-// const token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWE2ZTI2Yzk5M2M1YjAwMTRkYTc2ZmIiLCJpYXQiOjE3MDU0MzgzMjV9.PRYaic2iHDmBOG5JXQWp647BHVlFPWnHNyJckgLyu0w`;
 
 export const fetchContacts = createAsyncThunk(
   'contacts/fetchAll',
   async (token, thunkAPI) => {
     try {
-      const response = await axios.get(`${url}/contacts`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axios.get(`${url}/contacts`);
       return response.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
@@ -33,20 +26,11 @@ export const fetchContacts = createAsyncThunk(
 export const addContact = createAsyncThunk(
   'contacts/addContact',
   async (data, thunkAPI) => {
-    console.log(data);
     try {
-      const response = await axios.post(
-        `${url}/contacts`,
-        {
-          name: data.name,
-          number: data.number,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${data.token}`,
-          },
-        }
-      );
+      const response = await axios.post(`${url}/contacts`, {
+        name: data.name,
+        number: data.number,
+      });
       return response.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
@@ -57,20 +41,11 @@ export const addContact = createAsyncThunk(
 export const updateContact = createAsyncThunk(
   'contacts/updateContact',
   async (data, thunkAPI) => {
-    console.log(data);
     try {
-      const response = await axios.patch(
-        `${url}/contacts/${data.id}`,
-        {
-          name: data.name,
-          number: data.number,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${data.token}`,
-          },
-        }
-      );
+      const response = await axios.patch(`${url}/contacts/${data.id}`, {
+        name: data.name,
+        number: data.number,
+      });
       return response.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
@@ -82,35 +57,13 @@ export const removeContact = createAsyncThunk(
   'contacts/removeContact',
   async (data, thunkAPI) => {
     try {
-      const response = await axios.delete(`${url}/contacts/${data}`, {
-        headers: {
-          Authorization: `Bearer ${data.token}`,
-        },
-      });
-      setAuthToken(response.data.token);
+      const response = await axios.delete(`${url}/contacts/${data.id}`);
       return response.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
     }
   }
 );
-
-// export const removeContact = createAsyncThunk(
-//   'contacts/removeContact',
-//   async (id, { getState, rejectWithValue }) => {
-//     const token = getState(authState); // Replace with the actual path to the token in your state
-//     try {
-//       const response = await axios.delete(`${url}/contacts/${id}`, {
-//         headers: {
-//           Authorization: `Bearer ${token}`,
-//         },
-//       });
-//       return response.data;
-//     } catch (e) {
-//       return rejectWithValue(e.message);
-//     }
-//   }
-// );
 
 export const loginUser = createAsyncThunk(
   'users/loginUser',
@@ -144,23 +97,32 @@ export const registerUser = createAsyncThunk(
 export const logoutUser = createAsyncThunk(
   'users/logoutUser',
   async (token, thunkAPI) => {
-    console.log('data', token);
     try {
-      await axios.post(
-        `${url}/users/logout`,
-        {
-          token: token,
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      await axios.post(`${url}/users/logout`, {
+        token: token,
+      });
       clearAuthToken();
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
+    }
+  }
+);
+
+export const refreshUser = createAsyncThunk(
+  'auth/refresh',
+  async (_, thunkAPI) => {
+    const state = thunkAPI.getState();
+    const currentToken = state.users.token;
+
+    if (!currentToken) {
+      return thunkAPI.rejectWithValue('Auth error');
+    }
+
+    try {
+      const response = await axios.get(`${url}/users/current`);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
     }
   }
 );

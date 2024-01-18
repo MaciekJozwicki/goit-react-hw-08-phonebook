@@ -8,10 +8,8 @@ const AuthRoute = ({ component: Component, ...rest }) => {
   const authState = useSelector(selectToken);
   const navigate = useNavigate();
 
-  
   useEffect(() => {
     if (!authState) {
-      console.log(1333);
       navigate('/login');
     }
   }, [navigate, authState]);

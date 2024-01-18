@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchContacts, logoutUser } from '../../redux/operations';
+import { fetchContacts, logoutUser, refreshUser } from '../../redux/operations';
 import { selectToken } from '../../redux/selectors';
 import ContactList from 'components/ContactList/ContactList';
 import ContactForm from 'components/ContactForm/ContactForm';
@@ -11,6 +11,7 @@ const Contacts = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(refreshUser());
     dispatch(fetchContacts(token));
   }, [dispatch, token]);
 
