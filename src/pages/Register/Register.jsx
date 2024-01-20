@@ -1,19 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { fetchContacts, registerUser } from '../../redux/operations';
-import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { registerUser } from '../../redux/operations';
+import { Link, useNavigate } from 'react-router-dom';
 import { Box, Button, TextField, Typography } from '@mui/material';
+import { selectToken } from '../../redux/selectors';
 
 const Register = () => {
   const dispatch = useDispatch();
+  const token = useSelector(selectToken);
+  const navigate = useNavigate();
+  console.log(token);
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   useEffect(() => {
-    dispatch(fetchContacts());
-  }, [dispatch]);
+    if (token) {
+      navigate('/contacts');
+    }
+  }, [token, navigate]);
 
   const handleSubmit = e => {
     e.preventDefault();

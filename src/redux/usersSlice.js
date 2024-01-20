@@ -16,7 +16,7 @@ export const usersSlice = createSlice({
       })
       .addCase(registerUser.fulfilled, (state, { payload }) => {
         state.isLoading = true;
-        state.contacts = payload;
+        state.token = payload.token;
       })
       .addCase(registerUser.rejected, state => {
         state.isLoading = true;
